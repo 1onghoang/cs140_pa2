@@ -60,8 +60,6 @@ double parallel_pi(long long int no_tosses, int threadcnt) {
   number_in_circle = 0;
 
   parallel_loop(threadcnt);
-
-  printf("Total num in circle: %d\n", number_in_circle);
   pi_estimate = 4.0 * number_in_circle / (double)number_of_tosses;
   return pi_estimate;
 }
