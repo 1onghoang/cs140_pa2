@@ -177,6 +177,13 @@ char *itmv_test(char *testmsg, int test_correctness, int n, int mtype, int t,
   thread_mapping = mappingtype;
   cyclic_blocksize = cyclic_block;
 
+  printf("matrix_dim: %d, no_it: %d, m_type: %d, thr_map: %d, cyc_blck: %d\n",
+	matrix_dim,
+  	no_iterations,
+ 	matrix_type,
+  	thread_mapping,
+  	cyclic_blocksize);
+
   succ = allocate_space(&matrix_A, &vector_x, &vector_d, &vector_y, n);
   if (succ == 0) { /*one of processes failed in memory allocation*/
     msg = "Failed space allocation";
@@ -185,6 +192,7 @@ char *itmv_test(char *testmsg, int test_correctness, int n, int mtype, int t,
   }
   /*Initialize test matrix and vectors*/
   initialize(matrix_A, vector_x, vector_d, vector_y, n, matrix_type);
+
 #ifdef DEBUG1
   print_itmv_sample(testmsg, matrix_A, vector_x, vector_d, vector_y,
                     matrix_type, n, t);
@@ -213,7 +221,7 @@ char *itmv_test(char *testmsg, int test_correctness, int n, int mtype, int t,
 }
 
 char *itmv_test1() {
-  return itmv_test("Test 1", TEST_CORRECTNESS, 16, !UPPER_TRIANGULAR, 2,
+  return itmv_test("Test 1", TEST_CORRECTNESS, 4, !UPPER_TRIANGULAR, 2,
                    BLOCK_MAPPING, 0);
 }
 char *itmv_test2() {
@@ -295,6 +303,7 @@ char *itmv_test14a() {
  */
 void run_all_tests(void) {
   mu_run_test(itmv_test1);
+
   mu_run_test(itmv_test2);
   mu_run_test(itmv_test3);
   mu_run_test(itmv_test4);
@@ -305,12 +314,12 @@ void run_all_tests(void) {
   mu_run_test(itmv_test8);
   mu_run_test(itmv_test8a);
 
-  /*
+ 
   mu_run_test(itmv_test12);
   mu_run_test(itmv_test13);
   mu_run_test(itmv_test14);
   mu_run_test(itmv_test14a);
-  */
+  
 }
 
 /*-------------------------------------------------------------------
